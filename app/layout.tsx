@@ -1,7 +1,10 @@
 import { Nunito } from "next/font/google";
 
 import "./globals.css";
+import ClientOnly from "@/app/components/clientOnly";
+import RegisterModal from "@/app/components/modals/registerModal";
 import Navbar from "@/app/components/navbar/navbar";
+import ToastProvider from "@/app/providers/toastProvider";
 
 export const metadata = {
   title: "別荘&コンドミニアムをレンタル-Airbnb",
@@ -20,7 +23,11 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={font.className}>
-        <Navbar />
+        <ClientOnly>
+          <ToastProvider />
+          <RegisterModal />
+          <Navbar />
+        </ClientOnly>
         {children}
       </body>
     </html>
