@@ -2,6 +2,8 @@
 
 import { useCallback, useState } from "react";
 
+import { User } from "@prisma/client";
+import { signOut } from "next-auth/react";
 import { AiOutlineMenu } from "react-icons/ai";
 
 import Avatar from "@/app/components/avatar";
@@ -9,7 +11,11 @@ import MenuItem from "@/app/components/navbar/menuItem";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 
-const UserMenu = () => {
+type UserMenuProps = {
+  currentUser?: User | null;
+};
+
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const [isOpen, setIsOpen] = useState(false);
@@ -36,10 +42,22 @@ const UserMenu = () => {
       {isOpen && (
         <div className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-md md:w-3/4">
           <div className="flex cursor-pointer flex-col">
-            <>
-              <MenuItem onClick={loginModal.onOpen} label="ログイン" />
-              <MenuItem onClick={registerModal.onOpen} label="登録する" />
-            </>
+            {currentUser ? (
+              <>
+                <MenuItem onClick={() => {}} label="旅行" />
+                <MenuItem onClick={() => {}} label="お気に入り" />
+                <MenuItem onClick={() => {}} label="予約" />
+                <MenuItem onClick={() => {}} label="プロパティ" />
+                <MenuItem onClick={() => {}} label="Airbnbにお部屋を掲載" />
+                <hr />
+                <MenuItem onClick={() => signOut()} label="ログアウト" />
+              </>
+            ) : (
+              <>
+                <MenuItem onClick={loginModal.onOpen} label="ログイン" />
+                <MenuItem onClick={registerModal.onOpen} label="登録する" />
+              </>
+            )}
           </div>
         </div>
       )}
