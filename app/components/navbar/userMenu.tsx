@@ -6,10 +6,12 @@ import { AiOutlineMenu } from "react-icons/ai";
 
 import Avatar from "@/app/components/avatar";
 import MenuItem from "@/app/components/navbar/menuItem";
+import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 const UserMenu = () => {
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = useCallback(() => setIsOpen((prev) => !prev), []);
   return (
@@ -35,7 +37,7 @@ const UserMenu = () => {
         <div className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-md md:w-3/4">
           <div className="flex cursor-pointer flex-col">
             <>
-              <MenuItem onClick={() => {}} label="ログイン" />
+              <MenuItem onClick={loginModal.onOpen} label="ログイン" />
               <MenuItem onClick={registerModal.onOpen} label="登録する" />
             </>
           </div>
