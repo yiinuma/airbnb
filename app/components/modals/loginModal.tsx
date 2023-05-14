@@ -49,7 +49,7 @@ const LoginModal = () => {
       }
 
       if (callback?.error) {
-        toast.error("ログインできませんでした。");
+        toast.error(callback.error);
       }
     });
   };
