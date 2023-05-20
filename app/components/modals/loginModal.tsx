@@ -80,12 +80,17 @@ const LoginModal = () => {
   const footerContent = (
     <div className="mt-3 flex flex-col gap-4">
       <hr />
-      <Button outline label="Googleで続行" icon={FcGoogle} onClick={() => {}} />
+      <Button
+        outline
+        label="Googleで続行"
+        icon={FcGoogle}
+        onClick={() => signIn("google")}
+      />
       <Button
         outline
         label="Githubで続行"
         icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn("github")}
       />
       <div className="mt-4 text-center font-light text-neutral-500">
         <p>

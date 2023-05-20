@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import axios from "axios";
+import { signIn } from "next-auth/react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { AiFillGithub } from "react-icons/ai";
@@ -80,12 +81,17 @@ const RegisterModal = () => {
   const footerContent = (
     <div className="mt-3 flex flex-col gap-4">
       <hr />
-      <Button outline label="Googleで続行" icon={FcGoogle} onClick={() => {}} />
+      <Button
+        outline
+        label="Googleで続行"
+        icon={FcGoogle}
+        onClick={() => signIn("google")}
+      />
       <Button
         outline
         label="Githubで続行"
         icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn("github")}
       />
       <div className="mt-4 text-center font-light text-neutral-500">
         <p>
