@@ -8,12 +8,14 @@ import { IconType } from "react-icons";
 
 type CategoryBoxProps = {
   label: string;
+  jpLabel?: string | null;
   icon: IconType;
   selected?: boolean;
 };
 
 const CategoryBox: React.FC<CategoryBoxProps> = ({
   label,
+  jpLabel,
   icon: Icon,
   selected,
 }) => {
@@ -57,7 +59,7 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
       }`}
     >
       <Icon size={26} />
-      <div className="text-sm font-medium">{label}</div>
+      <div className="text-sm font-medium">{jpLabel ? jpLabel : label}</div>
     </div>
   );
 };

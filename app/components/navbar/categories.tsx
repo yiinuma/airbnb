@@ -22,77 +22,91 @@ import Container from "@/app/components/container";
 
 export const categories = [
   {
-    label: "ビーチフロント",
+    label: "Beach",
+    jpLabel: "ビーチ",
     icon: TbBeach,
     description: "This property is close to the beach!",
   },
   {
-    label: "風車小屋",
+    label: "Windmills",
+    jpLabel: "風車",
     icon: GiWindmill,
     description: "This property is has windmills!",
   },
   {
-    label: "モダン",
+    label: "Modern",
+    jpLabel: "モダン",
     icon: MdOutlineVilla,
     description: "This property is modern!",
   },
   {
-    label: "田園",
+    label: "Countryside",
+    jpLabel: "田舎",
     icon: TbMountain,
     description: "This property is in the countryside!",
   },
   {
-    label: "素敵なプール",
+    label: "Pools",
+    jpLabel: "プール",
     icon: TbPool,
     description: "This is property has a beautiful pool!",
   },
   {
-    label: "島",
+    label: "Islands",
+    jpLabel: "島",
     icon: GiIsland,
     description: "This property is on an island!",
   },
   {
-    label: "湖畔",
+    label: "Lake",
+    jpLabel: "湖畔",
     icon: GiBoatFishing,
     description: "This property is near a lake!",
   },
   {
-    label: "スキー",
+    label: "Skiing",
+    jpLabel: "スキー",
     icon: FaSkiing,
     description: "This property has skiing activies!",
   },
   {
-    label: "城",
+    label: "Castles",
+    jpLabel: "城",
     icon: GiCastle,
     description: "This property is an ancient castle!",
   },
   {
-    label: "洞窟",
+    label: "Caves",
+    jpLabel: "洞窟",
     icon: GiCaveEntrance,
     description: "This property is in a spooky cave!",
   },
   {
-    label: "キャンプ",
+    label: "Camping",
     icon: GiForestCamp,
     description: "This property offers camping activities!",
   },
   {
-    label: "北極圏",
+    label: "Arctic",
+    jpLabel: "北極圏",
     icon: BsSnow,
     description: "This property is in arctic environment!",
   },
   {
-    label: "砂漠",
+    label: "Desert",
+    jpLabel: "砂漠",
     icon: GiCactus,
     description: "This property is in the desert!",
   },
   {
-    label: "納屋",
+    label: "Barns",
+    jpLabel: "納屋",
     icon: GiBarn,
     description: "This property is in a barn!",
   },
   {
-    label: "Luxe",
+    label: "Lux",
+    jpLabel: "高級",
     icon: IoDiamond,
     description: "This property is brand new and luxurious!",
   },
@@ -113,6 +127,7 @@ const Categories = () => {
           <CategoryBox
             key={item.label}
             label={item.label}
+            jpLabel={item.jpLabel}
             icon={item.icon}
             selected={category === item.label}
           />
