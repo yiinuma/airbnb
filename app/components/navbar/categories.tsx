@@ -83,6 +83,7 @@ export const categories = [
   },
   {
     label: "Camping",
+    jpLabel: "キャンプ",
     icon: GiForestCamp,
     description: "This property offers camping activities!",
   },

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import axios from "axios";
 import { signIn } from "next-auth/react";
@@ -13,10 +13,12 @@ import Button from "@/app/components/button";
 import Heading from "@/app/components/heading";
 import Input from "@/app/components/inputs/input";
 import Modal from "@/app/components/modals/modal";
+import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -46,6 +48,11 @@ const RegisterModal = () => {
         setIsLoading(false);
       });
   };
+
+  const toggle = useCallback(() => {
+    registerModal.onClose();
+    loginModal.onOpen();
+  }, [loginModal, registerModal]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -97,7 +104,7 @@ const RegisterModal = () => {
         <p>
           既にアカウントをお持ちですか？
           <span
-            onClick={registerModal.onClose}
+            onClick={toggle}
             className="cursor-pointer text-neutral-800 hover:underline"
           >
             ログイン

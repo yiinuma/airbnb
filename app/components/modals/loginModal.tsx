@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
@@ -54,6 +54,11 @@ const LoginModal = () => {
     });
   };
 
+  const toggle = useCallback(() => {
+    loginModal.onClose();
+    registerModal.onOpen();
+  }, [loginModal, registerModal]);
+
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading title="おかえりなさい" subtitle="アカウントにログインする" />
@@ -94,12 +99,12 @@ const LoginModal = () => {
       />
       <div className="mt-4 text-center font-light text-neutral-500">
         <p>
-          既にアカウントをお持ちですか？
+          初めてAirbnbを利用しますか？
           <span
-            onClick={registerModal.onClose}
+            onClick={toggle}
             className="cursor-pointer text-neutral-800 hover:underline"
           >
-            ログイン
+            アカウントを作成する
           </span>
         </p>
       </div>
