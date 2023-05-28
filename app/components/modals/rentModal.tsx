@@ -2,10 +2,12 @@
 
 import { useMemo, useState } from "react";
 
+import dynamic from "next/dynamic";
 import { FieldValues, useForm } from "react-hook-form";
 
 import Heading from "@/app/components/heading";
 import CategoryInput from "@/app/components/inputs/categoryInput";
+import CountrySelect from "@/app/components/inputs/countrySelect";
 import Modal from "@/app/components/modals/modal";
 import { categories } from "@/app/components/navbar/categories";
 import useRentModal from "@/app/hooks/useRentModal";
@@ -45,6 +47,16 @@ const RentModal = () => {
   });
 
   const category = watch("category");
+  const location = watch("location");
+
+  const Map = useMemo(
+    () =>
+      dynamic(() => import("../map"), {
+        ssr: false,
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [location]
+  );
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -88,7 +100,7 @@ const RentModal = () => {
           <div key={item.label} className="col-span-1">
             <CategoryInput
               onClick={(category) => setCustomValue("category", category)}
-              selected={category === item.label}
+              selected={category === item.jpLabel}
               label={item.jpLabel}
               icon={item.icon}
             />
@@ -98,11 +110,27 @@ const RentModal = () => {
     </div>
   );
 
+  if (step === STEPS.LOCATION) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="あなたの宿泊施設の場所を教えてください"
+          subtitle="ゲストがお客様を見つけられるようにする！"
+        />
+        <CountrySelect
+          value={location}
+          onChange={(value) => setCustomValue("location", value)}
+        />
+        <Map center={location?.latlng} />
+      </div>
+    );
+  }
+
   return (
     <Modal
       isOpen={rentModal.isOpen}
       onClose={rentModal.onClose}
-      onSubmit={rentModal.onClose}
+      onSubmit={onNext}
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
