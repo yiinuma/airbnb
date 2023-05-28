@@ -7,6 +7,7 @@ import { FieldValues, useForm } from "react-hook-form";
 
 import Heading from "@/app/components/heading";
 import CategoryInput from "@/app/components/inputs/categoryInput";
+import Counter from "@/app/components/inputs/counter";
 import CountrySelect from "@/app/components/inputs/countrySelect";
 import Modal from "@/app/components/modals/modal";
 import { categories } from "@/app/components/navbar/categories";
@@ -48,6 +49,9 @@ const RentModal = () => {
 
   const category = watch("category");
   const location = watch("location");
+  const guestCount = watch("guestCount");
+  const roomCount = watch("roomCount");
+  const bathroomCount = watch("bathroomCount");
 
   const Map = useMemo(
     () =>
@@ -122,6 +126,37 @@ const RentModal = () => {
           onChange={(value) => setCustomValue("location", value)}
         />
         <Map center={location?.latlng} />
+      </div>
+    );
+  }
+
+  if (step === STEPS.INFORMATION) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="宿泊施設の情報を入力してください"
+          subtitle="どんな設備がありますか？"
+        />
+        <Counter
+          title="客数"
+          subtitle="ゲストは何人まで可能ですか？"
+          value={guestCount}
+          onChange={(value) => setCustomValue("guestCount", value)}
+        />
+        <hr />
+        <Counter
+          onChange={(value) => setCustomValue("roomCount", value)}
+          value={roomCount}
+          title="部屋数"
+          subtitle="部屋は何室ありますか？"
+        />
+        <hr />
+        <Counter
+          onChange={(value) => setCustomValue("bathroomCount", value)}
+          value={bathroomCount}
+          title="バスルーム"
+          subtitle="バスルームは何室ありますか？"
+        />
       </div>
     );
   }
