@@ -9,6 +9,7 @@ import Heading from "@/app/components/heading";
 import CategoryInput from "@/app/components/inputs/categoryInput";
 import Counter from "@/app/components/inputs/counter";
 import CountrySelect from "@/app/components/inputs/countrySelect";
+import ImageUpload from "@/app/components/inputs/imageUpload";
 import Modal from "@/app/components/modals/modal";
 import { categories } from "@/app/components/navbar/categories";
 import useRentModal from "@/app/hooks/useRentModal";
@@ -52,6 +53,7 @@ const RentModal = () => {
   const guestCount = watch("guestCount");
   const roomCount = watch("roomCount");
   const bathroomCount = watch("bathroomCount");
+  const imageSrc = watch("imageSrc");
 
   const Map = useMemo(
     () =>
@@ -156,6 +158,21 @@ const RentModal = () => {
           value={bathroomCount}
           title="バスルーム"
           subtitle="バスルームは何室ありますか？"
+        />
+      </div>
+    );
+  }
+
+  if (step === STEPS.IMAGES) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="宿泊施設の画像をアップロードしてください"
+          subtitle="ゲストに魅力的な画像を見せてください！"
+        />
+        <ImageUpload
+          value={imageSrc}
+          onChange={(value) => setCustomValue("imageSrc", value)}
         />
       </div>
     );
