@@ -2,14 +2,18 @@
 
 import { useMemo, useState } from "react";
 
+import axios from "axios";
 import dynamic from "next/dynamic";
-import { FieldValues, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { FieldValues, SubmitHandler, set, useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 
 import Heading from "@/app/components/heading";
 import CategoryInput from "@/app/components/inputs/categoryInput";
 import Counter from "@/app/components/inputs/counter";
 import CountrySelect from "@/app/components/inputs/countrySelect";
 import ImageUpload from "@/app/components/inputs/imageUpload";
+import Input from "@/app/components/inputs/input";
 import Modal from "@/app/components/modals/modal";
 import { categories } from "@/app/components/navbar/categories";
 import useRentModal from "@/app/hooks/useRentModal";
@@ -23,9 +27,11 @@ enum STEPS {
   PRICE = 5,
 }
 const RentModal = () => {
+  const router = useRouter();
   const rentModal = useRentModal();
 
   const [step, setStep] = useState(STEPS.CATEGORY);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -42,7 +48,7 @@ const RentModal = () => {
       roomCount: 1,
       bathroomCount: 1,
       imageSrc: "",
-      price: 1,
+      price: 10000,
       title: "",
       description: "",
     },
@@ -78,6 +84,29 @@ const RentModal = () => {
 
   const onNext = () => {
     setStep((prev) => prev + 1);
+  };
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    if (step !== STEPS.PRICE) {
+      return onNext();
+    }
+
+    setIsLoading(true);
+    axios
+      .post("/api/listings", data)
+      .then(() => {
+        toast.success("掲載が完了しました。");
+        router.refresh();
+        reset();
+        setStep(STEPS.CATEGORY);
+        rentModal.onClose();
+      })
+      .catch(() => {
+        toast.error("エラーが発生しました。");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const actionLabel = useMemo(() => {
@@ -178,11 +207,60 @@ const RentModal = () => {
     );
   }
 
+  if (step === STEPS.DESCRIPTION) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="宿泊施設の説明を入力してください"
+          subtitle="端的な魅力説明が最高です！"
+        />
+        <Input
+          id="title"
+          label="タイトル"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+        <hr />
+        <Input
+          id="description"
+          label="説明"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+      </div>
+    );
+  }
+
+  if (step === STEPS.PRICE) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="宿泊施設の価格を入力してください"
+          subtitle="一泊でいくらですか？"
+        />
+        <Input
+          id="price"
+          label="価格"
+          formatPrice
+          type="number"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+      </div>
+    );
+  }
+
   return (
     <Modal
       isOpen={rentModal.isOpen}
       onClose={rentModal.onClose}
-      onSubmit={onNext}
+      onSubmit={handleSubmit(onSubmit)}
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
