@@ -13,6 +13,8 @@ const Logo = () => {
       height={32}
       src="/images/logo.png"
       alt="logo"
+      priority
+      unoptimized={true}
     />
   );
 };
