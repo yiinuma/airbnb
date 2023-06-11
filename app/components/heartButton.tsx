@@ -2,6 +2,7 @@
 
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
+import useFavorite from "@/app/hooks/useFavorite";
 import { safeUser } from "@/app/types";
 
 type HeartButtonProps = {
@@ -13,9 +14,10 @@ const HeartButton: React.FC<HeartButtonProps> = ({
   listingId,
   currentUser,
 }) => {
-  const hasFavorite = false;
-  const toggleFavorite = () => {};
-
+  const { hasFavorite, toggleFavorite } = useFavorite({
+    listingId,
+    currentUser,
+  });
   return (
     <button
       onClick={toggleFavorite}
