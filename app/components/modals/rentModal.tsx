@@ -135,8 +135,8 @@ const RentModal = () => {
           <div key={item.label} className="col-span-1">
             <CategoryInput
               onClick={(category) => setCustomValue("category", category)}
-              selected={category === item.jpLabel}
-              label={item.jpLabel}
+              selected={category === item.label}
+              label={item.label}
               icon={item.icon}
             />
           </div>
