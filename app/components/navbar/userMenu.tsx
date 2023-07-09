@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 
+import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { AiOutlineMenu } from "react-icons/ai";
 
@@ -10,13 +11,14 @@ import MenuItem from "@/app/components/navbar/menuItem";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useRentModal from "@/app/hooks/useRentModal";
-import { safeUser } from "@/app/types";
+import { SafeUser } from "@/app/types";
 
 type UserMenuProps = {
-  currentUser?: safeUser | null;
+  currentUser?: SafeUser | null;
 };
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
+  const router = useRouter();
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const rentModal = useRentModal();
@@ -55,7 +57,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           <div className="flex cursor-pointer flex-col">
             {currentUser ? (
               <>
-                <MenuItem onClick={() => {}} label="旅行" />
+                <MenuItem onClick={() => router.push("/trips")} label="旅行" />
                 <MenuItem onClick={() => {}} label="お気に入り" />
                 <MenuItem onClick={() => {}} label="予約" />
                 <MenuItem onClick={() => {}} label="プロパティ" />
